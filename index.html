@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Intro From</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.1/knockout-latest.js"></script>
+    </head>
+    <body>
+        <form data-bind="submit:display">
+            <label for="fname">First Name</label>
+            <input type="text" name="fname" data-bind="value:firstname"><br>
+            <label for="lname">Last Name</label>
+            <input type="text" name="lname" data-bind="value:lastname"><br>
+            <label for="fname">Prefix</label>
+            <select data-bind="options: prefix,selectedOptions: chosenPrefix"></select><br>
+            <label for="gender">Gender</label><br>
+            <label for="male">Male</label><input type="radio" value="Male" data-bind="checked: gender">
+            <label for="female">Female</label><input type="radio" value="Female" data-bind="checked: gender"><br>
+            <label for="phone">Phone Number</label>
+            <input type="text" name="phone" data-bind="value:phone"><br>
+            <label for="address">Address:</label><br>
+            <label for="country">Country</label>
+            <select data-bind="options: Country, selectedOptions: chosenCountries"></select>
+             <label for="state">State</label>
+            <input type="text" name="state" data-bind="value:state"><br>
+            <button type="submit">Submit</button>
+            
+            <table>
+                <thead>
+                    <tr><th>First name</th><th>Last name</th></tr>
+                </thead>
+                <tbody data-bind="foreach: myObservableArray">
+                    <tr>
+                        <td data-bind="text: fname"></td>
+                        <td data-bind="text: lname"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- <span data-bind="text:fname"></span><br>  -->
+            <!-- <span data-bind="text:lastname"></span>
+            <span data-bind="text:phone"></span><br>
+            <span data-bind="text:state"></span>
+             <span data-bind="text:chosenCountries"></span><br>
+            <span data-bind="text:gender"></span> --> -->
+        </form>
+            <script>
+                function ViewModel (){ 
+                    self=this;
+                    self.firstname=ko.observable(),
+                    self.lastname=ko.observable(),
+                    self.phone=ko.observable(),
+                    self.state=ko.observable(),
+                    self.prefix=ko.observableArray(['Mr.', 'Miss', 'Mrs.']),
+                    self.chosenPrefix=ko.observableArray(),
+                    self.Country=ko.observableArray(['Morocco', 'India', 'USA','England']),
+                    self.chosenCountries=ko.observableArray(), 
+                    self.gender=ko.observable("Male"), 
+                    self.myObservableArray=ko.observableArray(), 
+                    this.display=function(){
+                        fname=self.firstname;
+                        lname=self.lastname;
+                        mobile=self.phone;
+                        s=self.state;
+                        pre=self.chosenPrefix;
+                        country=self.chosenCountries;
+                        g=self.gender
+                        self.myObservableArray.push([{fname:fname},{lname:lname},{mobile:mobile},{state:s},{prefix:pre},{country:country},{gender:g}]);
+                        
+                    } ;
+                    
+                };
+                var vm=new ViewModel();
+                ko.applyBindings(vm);
+            </script>
+    </body>
+</html>
